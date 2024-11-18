@@ -22,6 +22,7 @@ def add_client(username: str, name: str, surname: str, email: str, password: str
         return error_code
 
     connection.commit()
+    return errors.OK
 
 
 def add_client_to_db(username: str, name: str, surname: str, email: str, password: str, telephone_number: str, cursor):
