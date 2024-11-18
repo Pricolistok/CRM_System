@@ -1,55 +1,36 @@
-from fastapi import FastAPI
-from datetime import date
+from errno import ERANGE
+from typing import Annotated
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from requests_to_db import ADD_CLIENT, CHECK_EQ_USERNAME, FIND_CLIENT, ALL_CLIENTS
-from settings_for_connect import CONNECTION
+from clients.register_new_client import add_client
+from clients.funcs_for_clients import all_clients, find_client
+from clients.auth_client import find_client_username_in_db, check_password
 
 app = FastAPI()
-connection = CONNECTION
 
+auth = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.get("/")
-async def all_clients() -> str:
+async def root():
     return 'OK'
 
-@app.post('/add_new_clients')
-async def add_user(username: str, name: str, surname: str, email: str, password: str, telephone_number: str):
-    cursor = connection.cursor()
-    cursor.execute(CHECK_EQ_USERNAME, username)
-    result = cursor.fetchone()
-    print(len(result))
-    if result[0] != 0:
-        return 101
-    cursor.execute(ADD_CLIENT, (username, password, name, surname, email, telephone_number, date.today()))
-    connection.commit()
-    return 0
+@app.post("/register_new_client")
+async def create_new_client(username: str, name: str, surname: str, email: str, password: str, telephone_number: str):
+    return add_client(username, name, surname, email, password, telephone_number)
+
+@app.post("/login_client")
+async def login_client(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    if not find_client_username_in_db(form_data.username):
+        raise HTTPException(status_code=400, detail="Error Authenticating")
+    if not check_password(form_data.username, form_data.password):
+        raise HTTPException(status_code=400, detail="Error Authenticating")
+    return {"acess_token": form_data.username, "token_type": "bearer"}
 
 @app.get("/find_client_with_username")
 async def find_client(username: str):
-    cursor = connection.cursor()
-    cursor.execute(FIND_CLIENT, username)
-    result = dict()
-    saver = dict()
-    result_from_db = cursor.fetchone()
-    print(result_from_db)
-    arr_names = ["id", "username", "password", "name", "surname", "email", "telephone_number", "date"]
-    for i in range(len(arr_names)):
-        saver[arr_names[i]] = result_from_db[i]
-    result[0] = saver
-    return result
+    return find_client(username=username)
 
 @app.get("/return_all_clients")
 async def find_client() -> dict:
-    cursor = connection.cursor()
-    arr_names = ["id", "username", "password", "name", "surname", "email", "telephone_number", "date"]
-    result = dict()
-    saver = dict()
-    cursor.execute(ALL_CLIENTS)
-    result_from_db = cursor.fetchall()
-    for i in range(len(result_from_db)):
-        for j in range(len(arr_names)):
-            saver[arr_names[j]] = result_from_db[i][j]
-        result[i] = saver
-        saver = dict()
-    print(result)
-    return result
+    return all_clients()
