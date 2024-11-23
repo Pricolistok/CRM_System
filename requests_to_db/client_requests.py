@@ -13,14 +13,14 @@ ALL_CLIENTS = '''
     SELECT * FROM  clients;
 '''
 
-CHECK_EQ_EMAIL= '''
+CHECK_EQ_EMAIL = '''
     SELECT COUNT(*) FROM clients WHERE email=%s;
 '''
 
-CHECK_EQ_TELEPHONE_NUMBER= '''
+CHECK_EQ_TELEPHONE_NUMBER = '''
     SELECT COUNT(*) FROM clients WHERE telephone_number=%s;
 '''
 
-CHECK_EQ_PASSWORD='''
+CHECK_EQ_PASSWORD ='''
     SELECT password FROM clients WHERE username=%s;
 '''

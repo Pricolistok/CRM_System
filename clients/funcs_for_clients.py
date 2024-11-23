@@ -1,4 +1,4 @@
-from utils.settings_for_connect import CONNECTION
+from settings.settings_for_connect import CONNECTION
 from requests_to_db.client_requests import FIND_CLIENT, ALL_CLIENTS
 
 connection = CONNECTION
@@ -9,7 +9,6 @@ def find_client(username: str):
     result = dict()
     saver = dict()
     result_from_db = cursor.fetchone()
-    print(result_from_db)
     arr_names = ["id", "username", "password", "name", "surname", "email", "telephone_number", "date"]
     for i in range(len(arr_names)):
         saver[arr_names[i]] = result_from_db[i]
@@ -27,8 +26,4 @@ def all_clients():
             saver[arr_names[j]] = result_from_db[i][j]
         result[i] = saver
         saver = dict()
-    print(result)
     return result
-
-
-
