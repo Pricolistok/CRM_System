@@ -1,6 +1,5 @@
 from datetime import datetime
-
-from PyQt5.QtCore.QUrl import password
+from pydantic import BaseModel
 
 
 class Client:
@@ -18,3 +17,8 @@ class Client:
 
     def get_password(self):
         return self.password
+
+class Token:
+    def __init__(self, access_token: str, token_type: str):
+        self.access_token = access_token
+        self.token_type = token_type

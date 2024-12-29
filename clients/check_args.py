@@ -1,5 +1,4 @@
 from curses.ascii import isdigit
-from string import ascii_letters, digits
 from utils.encrypt_funcs import encrypt_text
 from settings.encrypt_settings import LEVEL_ENCRYPT
 
