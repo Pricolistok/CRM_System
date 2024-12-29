@@ -15,29 +15,14 @@ auth = OAuth2PasswordBearer(tokenUrl="token")
 connection = CONNECTION
 cursor = connection.cursor()
 
-class Client(BaseModel):
-    username: str
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
 
 def auth_client(form_data):
     if not find_client_username_in_db(form_data.username):
         raise HTTPException(status_code=400, detail="Error Authenticating")
     if not check_password(form_data.username, form_data.password):
         raise HTTPException(status_code=400, detail="Error Authenticating")
-    access_token = create_access_token(data={"sub": form_data.username})
     return Token(access_token=access_token, token_type="bearer")
 
-
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TIME)
-    to_encode.update({"exp": expire})
-    return encode(to_encode, SECRET_KEY, ALGORITHM_HASH)
 
 
 def find_client_username_in_db(username: str):
