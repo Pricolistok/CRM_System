@@ -1,13 +1,13 @@
 # Подключенные библиотеки
 from typing import Annotated
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.params import Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from clients.register_new_client import add_client
 from clients.funcs_for_clients import all_clients, find_client
 from clients.auth_client import auth_client
 from utils.errors import OK
-from clients.client_settings import Client, Token
+from clients.client_settings import Client
 
 # Создание приложения
 app = FastAPI()
@@ -27,8 +27,11 @@ async def create_new_client(username: str, password: str, name: str, surname: st
 
 # Функция для авторизации пользователя на площадке
 @app.post("/login_client")
-async def login_client(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    return auth_client(form_data).access_token
+async def login_client(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    access_token =  auth_client(form_data).access_token
+    response.set_cookie(key="users_access_token", value=access_token,  httponly=True)
+    return "The Client was logged"
+
 
 # Функция для поиска пользователя в БД
 @app.get("/find_client_with_username")
