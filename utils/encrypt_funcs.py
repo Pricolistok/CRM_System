@@ -14,7 +14,6 @@ def hash_pwd(text: str) -> str:
 
 
 def encrypt_text(data: str, level_encrypt: int):
-    print(data)
     for cnt_level_encrypt in range(level_encrypt):
         encrypt_data = ''
         for elem_in_data in data:
