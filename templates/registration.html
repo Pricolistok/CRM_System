@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Navbar</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+               <div class="btn-group me-2" role="group" aria-label="First group">
+                   <a href="http://127.0.0.1:8000/register_page">
+                    <button type="button" class="btn btn-outline-dark" id="register_btn">Register</button>
+                   </a>
+                </div>
+                <div class="input-group">
+                  <button type="button" class="btn btn-outline-dark">Login</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+</header>
+<body>
+<div class="container" id="block_of_register">
+    <form>
+        <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Username</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Password</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Name</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+      </div>
+        <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Surname</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+      </div>
+        <input id="datepicker" width="276" />
+
+        <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
+<script src="static/js/bootstrap.js"></script>
+<script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap5'
+        });
+    </script>

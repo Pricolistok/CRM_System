@@ -1,8 +1,11 @@
 # Подключенные библиотеки
 from typing import Annotated
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Response, Request
+# from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from fastapi.params import Depends
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.staticfiles import StaticFiles
 from clients.register_new_client import add_client
 from clients.funcs_for_clients import all_clients, find_client
 from clients.auth_client import auth_client
@@ -11,13 +14,19 @@ from clients.client_settings import Client
 
 # Создание приложения
 app = FastAPI()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+templates = Jinja2Templates(directory='templates')
+app.mount("/static", StaticFiles(directory="templates/static"), name="static")
+
 
 # Ручка для главной страницы
 @app.get("/")
-async def root():
-    return 'OK'
+async def root(request: Request):
+    return templates.TemplateResponse(request=request, name='index.html')
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+@app.get("/register_page")
+async def register_page(request: Request):
+    return templates.TemplateResponse(request=request, name='registration.html')
 
 # Ручка для регистрации нового пользователя
 @app.post("/register_new_client")

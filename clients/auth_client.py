@@ -1,6 +1,5 @@
 import jwt
 from oauthlib.openid.connect.core.exceptions import InvalidTokenError
-from uaclient.api.u.unattended_upgrades.status.v1 import status
 
 from settings.settings_for_connect import CONNECTION
 from requests_to_db.client_requests import CHECK_EQ_USERNAME, CHECK_EQ_PASSWORD

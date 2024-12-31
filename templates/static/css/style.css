@@ -1,0 +1,8 @@
+#block_of_register
+{
+    margin-top: 50px;
+    border-bottom: black;
+}
+.input-group-append {
+  cursor: pointer;
+}
