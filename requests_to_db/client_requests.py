@@ -24,3 +24,7 @@ CHECK_EQ_TELEPHONE_NUMBER = '''
 CHECK_EQ_PASSWORD ='''
     SELECT password FROM clients WHERE username=%s;
 '''
+
+CHECK_EMAIL = '''
+    SELECT email FROM clients WHERE email=%s;
+'''

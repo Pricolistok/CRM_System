@@ -4,10 +4,11 @@ from fastapi import FastAPI, HTTPException, Response
 from fastapi.params import Depends
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from clients.register_new_client import add_client
-from clients.funcs_for_clients import all_clients, find_client
+from clients.funcs_for_clients import all_clients
 from clients.auth_client import auth_client
 from utils.errors import OK
 from clients.client_settings import Client
+from clients.forgot_password import check_email_for_forgot
 
 # Создание приложения
 app = FastAPI()
@@ -43,3 +44,12 @@ async def login_client(response: Response, form_data: Annotated[OAuth2PasswordRe
 @app.get("/return_all_clients")
 async def find_client(token: str = Depends(oauth2_scheme)) -> dict:
     return all_clients()
+
+@app.put("/forgot_password_check_email")
+async def forgot_password_check_email(email: str):
+    return check_email_for_forgot(email)
+
+
+@app.get("/sent_email_for_new_password")
+async def sent_email(email: str):
+    return
