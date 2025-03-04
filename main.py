@@ -45,11 +45,11 @@ async def login_client(response: Response, form_data: Annotated[OAuth2PasswordRe
 async def find_client(token: str = Depends(oauth2_scheme)) -> dict:
     return all_clients()
 
-@app.put("/forgot_password_check_email")
-async def forgot_password_check_email(email: str):
-    return check_email_for_forgot(email)
-
-
-@app.get("/sent_email_for_new_password")
-async def sent_email(email: str):
+# @app.put("/forgot_password_check_email")
+# async def forgot_password_check_email(email: str):
+#     return check_email_for_forgot(email)
+#
+#
+# @app.get("/sent_email_for_new_password")
+# async def sent_email(email: str):
     return

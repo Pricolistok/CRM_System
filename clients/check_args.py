@@ -1,4 +1,3 @@
-from curses.ascii import isdigit
 from utils.encrypt_funcs import encrypt_text
 from settings.encrypt_settings import LEVEL_ENCRYPT
 
@@ -60,6 +59,6 @@ def check_telephone_correct(telephone_number: str) -> bool:
             return errors.ERROR
         telephone_number = '+7' + telephone_number[2:]
     for i in range(start_check_telephone_number, len_telephone_number):
-        if not isdigit(telephone_number[i]):
+        if not telephone_number[i].isdigit():
             return errors.ERROR
     return errors.OK
