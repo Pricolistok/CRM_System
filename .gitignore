@@ -1,0 +1,5 @@
+.venv
+.idea/
+__pycache__/
+settings/
+fille_for_testing.py
